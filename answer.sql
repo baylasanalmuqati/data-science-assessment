@@ -1,1 +1,15 @@
--- ADD YOUR SQL QUERY HERE
+SELECT
+  t.investor_id,
+  s.sector_name,
+  ROUND(
+    (t.no_of_shares * 100.0) / SUM(t.no_of_shares) OVER (PARTITION BY t.investor_id),
+    2
+  ) AS share_percentage
+FROM
+  investor_transactions AS t
+JOIN
+  sectors AS s
+  ON t.sector_id = s.sector_id
+ORDER BY
+  t.investor_id ASC,
+  share_percentage DESC;-- ADD YOUR SQL QUERY HERE
